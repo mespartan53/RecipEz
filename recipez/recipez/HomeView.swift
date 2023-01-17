@@ -57,7 +57,15 @@ struct HomeView: View {
                                         .disableAutocorrection(true)
                                         .submitLabel(.search)
                                         
-                                        
+                                        Button {
+                                            recipeSearchViewModel.loadRandomSelection()
+                                        } label: {
+                                            Image(systemName: "questionmark.app.dashed")
+                                                .font(.title)
+                                                .fontWeight(.light)
+                                                .foregroundColor(.green)
+                                        }
+
                                     }
                                     .padding()
                                 }
