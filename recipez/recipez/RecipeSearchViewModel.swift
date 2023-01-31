@@ -15,6 +15,24 @@ class RecipeSearchViewModel: ObservableObject {
         meals.meals ?? []
     }
     
+    @MainActor func setSelectedMeal(for id: String) async {
+        guard let url = URL(string: MealDBurls.baseURL + MealDBurls.fullMealById + id)
+        else {
+            print("Invalid URL for selected meal")
+            return
+        }
+        let urlSession = URLSession.shared
+        
+        do {
+            let (data, _) = try await urlSession.data(from: url)
+            self.selectedMeal = try JSONDecoder().decode(Response.self, from: data)
+            
+        } catch {
+            //Handle error
+            print("Error selecting a single meal")
+        }
+    }
+    
     func getIngredients(for meal: Meal) -> [String] {
         var ingredients: [String] = []
         
@@ -319,10 +337,6 @@ class RecipeSearchViewModel: ObservableObject {
             }
         }
         task.resume()
-        
-        if self.meals.meals == nil {
-            loadByName(name: ingredients)
-        }
     }
     
     func loadRandomSelection() {

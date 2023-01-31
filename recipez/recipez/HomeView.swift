@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject var recipeSearchViewModel = RecipeSearchViewModel()
+    @MainActor @StateObject var recipeSearchViewModel = RecipeSearchViewModel()
     @State var search = ""
     
     @State var selectedMeal: Meal?
@@ -19,7 +19,7 @@ struct HomeView: View {
             ZStack {
                     ScrollView(.vertical) {
                         VStack {
-                            Text("Search")
+                            Text("Ingredient Search")
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             Spacer(minLength: 40)
@@ -70,7 +70,7 @@ struct HomeView: View {
                                     .padding()
                                 }
                                 .frame(maxHeight: 40)
-                                Spacer(minLength: 30)
+                                Spacer(minLength: 40)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal)
@@ -99,9 +99,9 @@ struct HomeView: View {
             ScrollView {
                 VStack {
                     ZStack (alignment: .topLeading) {
-                        AsyncImage(url: URL(string: selectedMeal?.strMealThumb ?? "")) { image in
+                        AsyncImage(url: URL(string: recipeSearchViewModel.selectedMeal.meals?[0].strMealThumb ?? "")) { image in
                             image.resizable()
-                                .matchedGeometryEffect(id: selectedMeal?.idMeal, in: homeNamespace)
+                                .matchedGeometryEffect(id: recipeSearchViewModel.selectedMeal.meals?[0].idMeal, in: homeNamespace)
                                 .frame(height: 350)
                         } placeholder: {
                             ProgressView()
@@ -138,14 +138,14 @@ struct HomeView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text(selectedMeal?.strMeal.capitalized ?? "")
+                        Text(recipeSearchViewModel.selectedMeal.meals?[0].strMeal.capitalized ?? "")
                             .font(.title)
                             .fontWeight(.bold)
                         
                         HStack(spacing: 20) {
                             //ingredients
                             VStack(spacing: 15) {
-                                ForEach(recipeSearchViewModel.getIngredients(for: selectedMeal!), id: \.self) {ingredient in
+                                ForEach(recipeSearchViewModel.getIngredients(for: recipeSearchViewModel.selectedMeal.meals![0]), id: \.self) {ingredient in
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 20)
                                             .foregroundColor(Color("DetailsColor"))
@@ -157,7 +157,7 @@ struct HomeView: View {
                             }
                             //units of measure
                             VStack(spacing: 15) {
-                                ForEach(recipeSearchViewModel.getMeasures(for: selectedMeal!), id: \.self) {measure in
+                                ForEach(recipeSearchViewModel.getMeasures(for: recipeSearchViewModel.selectedMeal.meals![0]), id: \.self) {measure in
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 20)
                                             .foregroundColor(Color("DetailsColor"))
@@ -170,7 +170,7 @@ struct HomeView: View {
                         }.frame(maxWidth: .infinity)
                             .padding(.vertical)
                         
-                        Text(selectedMeal?.strInstructions ?? "")
+                        Text(recipeSearchViewModel.selectedMeal.meals?[0].strInstructions ?? "")
                             .padding()
                         
                     }.padding(.horizontal)
@@ -192,14 +192,17 @@ struct HomeView: View {
         } else if recipeSearchViewModel.meals.meals == [] {
             Text("Nothing to see here :)")
         } else {
-            LazyVGrid(columns: [GridItem(), GridItem()], spacing: 15) {
+            LazyVGrid(columns: [GridItem(), GridItem()], spacing: 25) {
                 ForEach(recipeSearchViewModel.meals.meals!, id: \.idMeal) { meal in
                     MealView(meal: meal, namespace: _homeNamespace)
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.5)) {
-                                showDetails.toggle()
+                                //Can remove this once the print function for the heart icon is updated
                                 selectedMeal = meal
-                                //need to make api call to get single meal by id for full deets. api is poorly designed. This is whiy after searching, some meals will load with no other data than picture and title
+                                Task() {
+                                    await recipeSearchViewModel.setSelectedMeal(for: meal.idMeal)
+                                    showDetails.toggle()
+                                }
                             }
                         }
                         .padding(.horizontal, 4)
