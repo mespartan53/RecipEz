@@ -32,7 +32,7 @@ struct HomeView: View {
                                 Spacer(minLength: 30)
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .strokeBorder(.green, antialiased: true)
+                                        .strokeBorder(Color("AccentColorTab"), antialiased: true)
                                         .background {
                                             RoundedRectangle(cornerRadius: 10)
                                                 .fill(.gray.opacity(0.2))
@@ -63,7 +63,7 @@ struct HomeView: View {
                                             Image(systemName: "questionmark.app.dashed")
                                                 .font(.title)
                                                 .fontWeight(.light)
-                                                .foregroundColor(.green)
+                                                .foregroundColor(Color("AccentColorTab"))
                                         }
 
                                     }
