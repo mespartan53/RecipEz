@@ -21,6 +21,7 @@
 		0DE4B582295BA24B00297FB6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0DE4B581295BA24B00297FB6 /* Preview Assets.xcassets */; };
 		0DE4B58C295BA46C00297FB6 /* Meal_Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4B58B295BA46C00297FB6 /* Meal_Model.swift */; };
 		0DE4B58E296E60F100297FB6 /* RecipeSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4B58D296E60F100297FB6 /* RecipeSearchViewModel.swift */; };
+		2CF2955C0E8CA358567414D3 /* Pods_recipez.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6441A6E9127C22A9061A943C /* Pods_recipez.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		0D0ED31129A457F200BCEAC9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D4F594E2995C878002E1979 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		0D4F595029A020A7002E1979 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		0DA3D43829D2606800CB4881 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0DE4B577295BA24A00297FB6 /* recipez.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = recipez.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DE4B57A295BA24A00297FB6 /* recipezApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recipezApp.swift; sourceTree = "<group>"; };
 		0DE4B57C295BA24A00297FB6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -35,6 +37,9 @@
 		0DE4B581295BA24B00297FB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0DE4B58B295BA46C00297FB6 /* Meal_Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal_Model.swift; sourceTree = "<group>"; };
 		0DE4B58D296E60F100297FB6 /* RecipeSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchViewModel.swift; sourceTree = "<group>"; };
+		1D48AA192F9A7E60C112FADC /* Pods-recipez.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipez.debug.xcconfig"; path = "Target Support Files/Pods-recipez/Pods-recipez.debug.xcconfig"; sourceTree = "<group>"; };
+		6441A6E9127C22A9061A943C /* Pods_recipez.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_recipez.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		727C9ED6B9C41CEA12F3B064 /* Pods-recipez.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipez.release.xcconfig"; path = "Target Support Files/Pods-recipez/Pods-recipez.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +51,7 @@
 				0D0ED31929A45A6100BCEAC9 /* FirebaseAuth in Frameworks */,
 				0D0ED31729A45A6100BCEAC9 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				0D0ED31B29A45A6100BCEAC9 /* FirebaseFirestoreSwift in Frameworks */,
+				2CF2955C0E8CA358567414D3 /* Pods_recipez.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,6 +63,8 @@
 			children = (
 				0DE4B579295BA24A00297FB6 /* recipez */,
 				0DE4B578295BA24A00297FB6 /* Products */,
+				6A27C546AE62869FA3AAECB1 /* Pods */,
+				B81D26F9519D514676C3D93A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +79,7 @@
 		0DE4B579295BA24A00297FB6 /* recipez */ = {
 			isa = PBXGroup;
 			children = (
+				0DA3D43829D2606800CB4881 /* Info.plist */,
 				0D0ED31129A457F200BCEAC9 /* GoogleService-Info.plist */,
 				0D0ED30F29A4442800BCEAC9 /* OnboardingViewModel.swift */,
 				0DE4B588295BA26900297FB6 /* Models */,
@@ -101,6 +110,23 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		6A27C546AE62869FA3AAECB1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1D48AA192F9A7E60C112FADC /* Pods-recipez.debug.xcconfig */,
+				727C9ED6B9C41CEA12F3B064 /* Pods-recipez.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		B81D26F9519D514676C3D93A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6441A6E9127C22A9061A943C /* Pods_recipez.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -108,9 +134,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0DE4B585295BA24B00297FB6 /* Build configuration list for PBXNativeTarget "recipez" */;
 			buildPhases = (
+				DE524C44950BAE7EF38C9441 /* [CP] Check Pods Manifest.lock */,
 				0DE4B573295BA24A00297FB6 /* Sources */,
 				0DE4B574295BA24A00297FB6 /* Frameworks */,
 				0DE4B575295BA24A00297FB6 /* Resources */,
+				904489418F7F860F704B849E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -175,6 +203,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		904489418F7F860F704B849E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-recipez/Pods-recipez-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-recipez/Pods-recipez-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-recipez/Pods-recipez-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE524C44950BAE7EF38C9441 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-recipez-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0DE4B573295BA24A00297FB6 /* Sources */ = {
@@ -310,6 +380,7 @@
 		};
 		0DE4B586295BA24B00297FB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1D48AA192F9A7E60C112FADC /* Pods-recipez.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -319,11 +390,15 @@
 				DEVELOPMENT_TEAM = 42DFQP3VAX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = recipez/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RecipEz;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -339,6 +414,7 @@
 		};
 		0DE4B587295BA24B00297FB6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 727C9ED6B9C41CEA12F3B064 /* Pods-recipez.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -348,11 +424,15 @@
 				DEVELOPMENT_TEAM = 42DFQP3VAX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = recipez/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RecipEz;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

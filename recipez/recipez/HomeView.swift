@@ -8,87 +8,89 @@
 import SwiftUI
 
 struct HomeView: View {
-    @MainActor @StateObject var recipeSearchViewModel = RecipeSearchViewModel()
+    @StateObject var recipeSearchViewModel = RecipeSearchViewModel()
     @State var search = ""
     
     @State var selectedMeal: Meal?
     @State var showDetails = false
-    @Namespace var homeNamespace
+    @Namespace var homeNamespace : Namespace.ID
     
     var body: some View {
             ZStack {
+                if !showDetails {
                     ScrollView(.vertical) {
-                        VStack {
-                            Text("Ingredient Search")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                            Spacer(minLength: 40)
-                            Group {
-                                Text("What's in your kitchen?")
+                            VStack {
+                                Text("Ingredient Search")
                                     .font(.title2)
-                                Text("Enter some ingredients")
-                                    .font(.body)
-                                    .foregroundColor(.gray)
-                                Spacer(minLength: 30)
-                                ZStack {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .strokeBorder(Color("AccentColorTab"), antialiased: true)
-                                        .background {
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .fill(.gray.opacity(0.2))
-                                        }
-                                    
-                                    HStack {
-                                        Image(systemName: "magnifyingglass")
-                                            .font(.title3)
-                                            .fontWeight(.light)
-                                        TextField("chicken , salt, garlic ...", text: $search, onCommit: {
-                                            //move to seperate function in view model once created
-                                            let pattern = "\\s+"
-                                            
-                                            do {
-                                                let regex = try NSRegularExpression(pattern: pattern, options: [])
-                                                let modifiedString = regex.stringByReplacingMatches(in: search, range: NSRange(location: 0, length: search.utf16.count), withTemplate: ",")
-                                                recipeSearchViewModel.loadByIngredients(ingredients: modifiedString)
-                                            } catch {
-                                                print("Oops! Something went wrong")
-                                            }
-                                        })
-                                        .disableAutocorrection(true)
-                                        .submitLabel(.search)
-                                        
-                                        Button {
-                                            recipeSearchViewModel.loadRandomSelection()
-                                        } label: {
-                                            Image(systemName: "questionmark.app.dashed")
-                                                .font(.title)
-                                                .fontWeight(.light)
-                                                .foregroundColor(Color("AccentColorTab"))
-                                        }
-
-                                    }
-                                    .padding()
-                                }
-                                .frame(maxHeight: 40)
+                                    .fontWeight(.semibold)
                                 Spacer(minLength: 40)
+                                Group {
+                                    Text("What's in your kitchen?")
+                                        .font(.title2)
+                                    Text("Enter some ingredients")
+                                        .font(.body)
+                                        .foregroundColor(.gray)
+                                    Spacer(minLength: 30)
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .strokeBorder(Color("AccentColor"), antialiased: true)
+                                            .background {
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(.gray.opacity(0.2))
+                                            }
+                                        
+                                        HStack {
+                                            Image(systemName: "magnifyingglass")
+                                                .font(.title3)
+                                                .foregroundColor(Color("AccentColor"))
+                                            TextField("chicken , salt, garlic ...", text: $search, onCommit: {
+                                                //move to seperate function in view model once created
+                                                let pattern = "\\s+"
+                                                
+                                                do {
+                                                    let regex = try NSRegularExpression(pattern: pattern, options: [])
+                                                    let modifiedString = regex.stringByReplacingMatches(in: search, range: NSRange(location: 0, length: search.utf16.count), withTemplate: ",")
+                                                    recipeSearchViewModel.loadByIngredients(ingredients: modifiedString)
+                                                } catch {
+                                                    print("Oops! Something went wrong")
+                                                }
+                                            })
+                                            .disableAutocorrection(true)
+                                            .submitLabel(.search)
+                                            
+                                            Button {
+                                                recipeSearchViewModel.loadRandomSelection()
+                                            } label: {
+                                                Image(systemName: "questionmark.app.dashed")
+                                                    .font(.title)
+                                                    .foregroundColor(Color("AccentColor"))
+                                            }
+
+                                        }
+                                        .padding()
+                                    }
+                                    .frame(maxHeight: 40)
+                                    Spacer(minLength: 40)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal)
+                                
+                                recipeViews()
                             }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal)
-                            
-                            recipeViews()
                         }
+                        .padding()
+                        .onAppear {
+                            if recipeSearchViewModel.meals.meals == [] {
+                                recipeSearchViewModel.loadRandomSelection()
+                            }
                     }
-                    .padding()
-                    .onAppear {
-                        if recipeSearchViewModel.meals.meals == [] {
-                            recipeSearchViewModel.loadRandomSelection()
-                        }
-                    }
+                }
                 
             
             //Hero View...
             showDetailsView()
                 .ignoresSafeArea()
+                .animation(.spring(), value: showDetails)
         }
             .background(Color("MainBackgroundColor"))
     }
@@ -109,7 +111,7 @@ struct HomeView: View {
                         
                         HStack {
                             Button {
-                                withAnimation(.easeInOut(duration: 0.5)) {
+                                withAnimation(.easeInOut(duration: 1)) {
                                     showDetails.toggle()
                                 }
                             } label: {
@@ -194,9 +196,9 @@ struct HomeView: View {
         } else {
             LazyVGrid(columns: [GridItem(), GridItem()], spacing: 25) {
                 ForEach(recipeSearchViewModel.meals.meals!, id: \.idMeal) { meal in
-                    MealView(meal: meal, namespace: _homeNamespace)
+                    MealView(meal: meal)
                         .onTapGesture {
-                            withAnimation(.easeInOut(duration: 0.5)) {
+                            withAnimation(.spring()) {
                                 //Can remove this once the print function for the heart icon is updated
                                 selectedMeal = meal
                                 Task() {
@@ -210,42 +212,42 @@ struct HomeView: View {
             }
         }
     }
-}
-
-struct MealView: View {
-    let meal: Meal
-    @Namespace var namespace
     
-    var body: some View {
-        ZStack {
-            AsyncImage(url: URL(string: meal.strMealThumb!)) { image in
-                image.resizable()
-                    .matchedGeometryEffect(id: meal.idMeal, in: namespace)
-            } placeholder: {
-                ProgressView()
-            }
-            .cornerRadius(15)
-            
-            VStack {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 15)
-                        .frame(width: 40, height: 50)
-                        .foregroundColor(.gray.opacity(0.65))
-                    Image(systemName: "heart")
-                        .font(.title2)
+    struct MealView: View {
+        let meal: Meal
+        @Namespace var homeNamespace: Namespace.ID
+        
+        var body: some View {
+            ZStack {
+                AsyncImage(url: URL(string: meal.strMealThumb!)) { image in
+                    image.resizable()
+                        .matchedGeometryEffect(id: meal.idMeal, in: homeNamespace)
+                } placeholder: {
+                    ProgressView()
                 }
-                .frame(maxWidth: .infinity, alignment: .topTrailing)
-                Spacer()
-                Text(meal.strMeal)
-                    .foregroundColor(.white)
-                    .font(.body)
-                    .fontWeight(.bold)
-                    .shadow(color: .black, radius: 15)
-                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                .cornerRadius(15)
+                
+                VStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 15)
+                            .frame(width: 40, height: 50)
+                            .foregroundColor(.gray.opacity(0.65))
+                        Image(systemName: "heart")
+                            .font(.title2)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .topTrailing)
+                    Spacer()
+                    Text(meal.strMeal)
+                        .foregroundColor(.white)
+                        .font(.body)
+                        .fontWeight(.bold)
+                        .shadow(color: .black, radius: 15)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                }
+                .padding()
             }
-            .padding()
+            .aspectRatio(1, contentMode: .fit)
         }
-        .aspectRatio(1, contentMode: .fit)
     }
 }
 

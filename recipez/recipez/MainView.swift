@@ -25,10 +25,11 @@ struct MainView: View {
                 }
                 .onDisappear {
                     withAnimation {
-                        appear = 0.0
+                        appear = 0
                     }
                 }
                 .opacity(appear)
+                .animation(.spring(), value: appear)
         } else {
             TabView(selection: $tabNumber) {
                 Group {
@@ -67,7 +68,7 @@ struct MainView: View {
                         .tag(4)
                 }
             }
-            .accentColor(Color("AccentColorTab"))
+            .accentColor(Color("AccentColor"))
         }
     }
 }

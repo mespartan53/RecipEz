@@ -210,31 +210,31 @@ struct SignInView: View {
                     Spacer()
                     
                     Button {
-                        //
+                        onboardingVM.signInWithGoogle()
                     } label: {
                         Circle()
                             .foregroundColor(.white)
                             .frame(maxWidth: 50)
                             .overlay {
-                                Text("G")
-                                    .font(.title)
-                                    .fontWeight(.bold)
+                                Image("google")
+                                    .resizable()
+                                    .padding(13)
                             }
                     }
                     
                     Spacer()
                     
                     Button {
-                        //
+                        onboardingVM.signInWithApple()
                         print(Auth.auth().currentUser?.email ?? "No user")
                     } label: {
                         Circle()
                             .foregroundColor(.white)
                             .frame(maxWidth: 50)
                             .overlay {
-                                Text("A")
-                                    .font(.title)
-                                    .fontWeight(.bold)
+                                Image("apple")
+                                    .resizable()
+                                    .padding(13)
                             }
                     }
                     
