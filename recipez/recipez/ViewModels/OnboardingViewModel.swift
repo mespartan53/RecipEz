@@ -20,11 +20,29 @@ class OnboardingViewModel: NSObject, ObservableObject {
     @Published var currentOnboarding = OnBoardingType.signin
     @Published var formIsValid = false
     
+    @Published var alertTitle = ""
+    @Published var alertDetails = ""
+    @Published var showAlert = false
+    
     
     private let emailRegex = try! NSRegularExpression(pattern: "^\\S+@\\S+\\.\\S+$")
-    private let passwordRegex = try! NSRegularExpression(pattern: "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$")
+    private let passwordRegex = try! NSRegularExpression(pattern: "^.{8,}$")
     
     fileprivate var currentNonce: String?
+    
+    //MARK: alert functions
+    
+    func setAlert(title: String, details: String) {
+        alertTitle = title
+        alertDetails = details
+        showAlert = true
+    }
+    
+    func resetAlert() {
+        alertTitle = ""
+        alertDetails = ""
+        showAlert = false
+    }
     
     //MARK: Essential Database functions for onboarding
     
@@ -165,6 +183,7 @@ class OnboardingViewModel: NSObject, ObservableObject {
             result, error in
             if let err = error {
                 print("Failed to sign in due to error:", err)
+                self.setAlert(title: "Error Signing In", details: err.localizedDescription)
                 return
             }
             print("Successfully signed in with ID: \(result?.user.uid ?? "")")
@@ -175,7 +194,8 @@ class OnboardingViewModel: NSObject, ObservableObject {
         Auth.auth().createUser(withEmail: email, password: password) {
             result, error in
             if let err = error {
-                print("Failed to sign up due to error:", err)
+                print("Failed to sign up due to error:", err.localizedDescription)
+                self.setAlert(title: "Error Signing Up", details: err.localizedDescription)
                 return
             }
             

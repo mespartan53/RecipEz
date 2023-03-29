@@ -37,6 +37,7 @@
 		0DE4B581295BA24B00297FB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0DE4B58B295BA46C00297FB6 /* Meal_Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meal_Model.swift; sourceTree = "<group>"; };
 		0DE4B58D296E60F100297FB6 /* RecipeSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchViewModel.swift; sourceTree = "<group>"; };
+		0DF6AE9F29D3AA700060E65D /* recipez.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = recipez.entitlements; sourceTree = "<group>"; };
 		1D48AA192F9A7E60C112FADC /* Pods-recipez.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipez.debug.xcconfig"; path = "Target Support Files/Pods-recipez/Pods-recipez.debug.xcconfig"; sourceTree = "<group>"; };
 		6441A6E9127C22A9061A943C /* Pods_recipez.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_recipez.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		727C9ED6B9C41CEA12F3B064 /* Pods-recipez.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-recipez.release.xcconfig"; path = "Target Support Files/Pods-recipez/Pods-recipez.release.xcconfig"; sourceTree = "<group>"; };
@@ -79,17 +80,15 @@
 		0DE4B579295BA24A00297FB6 /* recipez */ = {
 			isa = PBXGroup;
 			children = (
+				0DF6AE9F29D3AA700060E65D /* recipez.entitlements */,
 				0DA3D43829D2606800CB4881 /* Info.plist */,
 				0D0ED31129A457F200BCEAC9 /* GoogleService-Info.plist */,
-				0D0ED30F29A4442800BCEAC9 /* OnboardingViewModel.swift */,
-				0DE4B588295BA26900297FB6 /* Models */,
-				0DE4B57A295BA24A00297FB6 /* recipezApp.swift */,
-				0DE4B57C295BA24A00297FB6 /* HomeView.swift */,
 				0DE4B57E295BA24B00297FB6 /* Assets.xcassets */,
+				0DE4B57A295BA24A00297FB6 /* recipezApp.swift */,
+				0DE4B588295BA26900297FB6 /* Models */,
+				0DF6AEA229D3CCBE0060E65D /* ViewModels */,
+				0DF6AEA129D3CCB40060E65D /* Views */,
 				0DE4B580295BA24B00297FB6 /* Preview Content */,
-				0DE4B58D296E60F100297FB6 /* RecipeSearchViewModel.swift */,
-				0D4F594E2995C878002E1979 /* MainView.swift */,
-				0D4F595029A020A7002E1979 /* SignInView.swift */,
 			);
 			path = recipez;
 			sourceTree = "<group>";
@@ -108,6 +107,25 @@
 				0DE4B58B295BA46C00297FB6 /* Meal_Model.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		0DF6AEA129D3CCB40060E65D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0D4F595029A020A7002E1979 /* SignInView.swift */,
+				0D4F594E2995C878002E1979 /* MainView.swift */,
+				0DE4B57C295BA24A00297FB6 /* HomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0DF6AEA229D3CCBE0060E65D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0DE4B58D296E60F100297FB6 /* RecipeSearchViewModel.swift */,
+				0D0ED30F29A4442800BCEAC9 /* OnboardingViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		6A27C546AE62869FA3AAECB1 /* Pods */ = {
@@ -384,6 +402,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = recipez/recipez.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"recipez/Preview Content\"";
@@ -406,6 +426,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.marcusestrada.recipez;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -418,6 +439,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = recipez/recipez.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"recipez/Preview Content\"";
@@ -440,6 +463,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.marcusestrada.recipez;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

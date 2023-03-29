@@ -11,13 +11,24 @@ import FirebaseAuth
 struct SignInView: View {
     @StateObject var onboardingVM = OnboardingViewModel()
     
-    @State var email = ""
-    @State var password = ""
+    let passwordRequirement = "    Must be at least 8 characters"
     
     var formRectangle: some View {
         RoundedRectangle(cornerRadius: 15)
             .frame(minHeight: 30, maxHeight: 50)
             .foregroundColor(.black.opacity(0.55))
+    }
+    
+    var passwordReqText: some View {
+        HStack(alignment: .top) {
+            Text(passwordRequirement)
+                .foregroundColor(.white)
+                .font(.caption)
+            Spacer()
+        }
+        .frame(maxHeight: onboardingVM.password.count < 8 ? 12 : 0)
+        .animation(.spring(), value: onboardingVM.password.count)
+        .clipped()
     }
     
     var body: some View {
@@ -69,6 +80,8 @@ struct SignInView: View {
                                 .foregroundColor(.white)
                                 .padding()
                         }
+                        
+                        passwordReqText
                         
                         Button {
                             onboardingVM.signInUser()
@@ -130,6 +143,8 @@ struct SignInView: View {
                                 .padding()
                         }
                         
+                        passwordReqText
+                        
                         Button {
                             //needs data verification for text fields
                             onboardingVM.signUpUser()
@@ -160,7 +175,7 @@ struct SignInView: View {
                     HStack {
                         Text("Forgot Password?")
                             .font(.system(size: 17))
-                            //.fontWeight(.bold)
+                        //.fontWeight(.bold)
                         Spacer()
                     }
                 } content: {
@@ -240,10 +255,17 @@ struct SignInView: View {
                     
                     Spacer()
                 }
-
+                
                 Spacer()
             }
             .padding()
+            .alert(onboardingVM.alertTitle, isPresented: $onboardingVM.showAlert, actions: {
+                Button("Retry") {
+                    onboardingVM.resetAlert()
+                }
+            }, message: {
+                Text(onboardingVM.alertDetails)
+            })
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
