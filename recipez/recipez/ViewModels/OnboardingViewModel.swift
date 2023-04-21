@@ -23,7 +23,7 @@ class OnboardingViewModel: NSObject, ObservableObject {
     @Published var alertTitle = ""
     @Published var alertDetails = ""
     @Published var showAlert = false
-    
+    @Published var showPwdRequirements = false
     
     private let emailRegex = try! NSRegularExpression(pattern: "^\\S+@\\S+\\.\\S+$")
     private let passwordRegex = try! NSRegularExpression(pattern: "^.{8,}$")
@@ -63,7 +63,6 @@ class OnboardingViewModel: NSObject, ObservableObject {
             }
         }
         
-        print("Creating new user")
         userRef.setData([
             "name": "Anonymous",
             "shoppingList": [],
@@ -211,14 +210,22 @@ class OnboardingViewModel: NSObject, ObservableObject {
             error in
             if let err = error {
                 print("Could not send email to reset password due to error:", err)
+                self.setAlert(title: "Error Resetting Password", details: err.localizedDescription)
                 return
             }
+            
+            self.setAlert(title: "Email Sent", details: "Check your email for instructions to reset your password")
         }
     }
     
     func validateForm() {
         var isEmailValid = false
         var isPasswordValid = false
+        
+        withAnimation(.easeInOut(duration: 0.25)) {
+            showPwdRequirements = (password.count > 0 && password.count < 8)
+        }
+        
         switch (currentOnboarding) {
         case .signup:
             isEmailValid = validateEmail()

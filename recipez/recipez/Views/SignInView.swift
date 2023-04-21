@@ -11,24 +11,10 @@ import FirebaseAuth
 struct SignInView: View {
     @StateObject var onboardingVM = OnboardingViewModel()
     
-    let passwordRequirement = "    Must be at least 8 characters"
-    
     var formRectangle: some View {
         RoundedRectangle(cornerRadius: 15)
             .frame(minHeight: 30, maxHeight: 50)
             .foregroundColor(.black.opacity(0.55))
-    }
-    
-    var passwordReqText: some View {
-        HStack(alignment: .top) {
-            Text(passwordRequirement)
-                .foregroundColor(.white)
-                .font(.caption)
-            Spacer()
-        }
-        .frame(maxHeight: onboardingVM.password.count < 8 ? 12 : 0)
-        .animation(.spring(), value: onboardingVM.password.count)
-        .clipped()
     }
     
     var body: some View {
@@ -81,7 +67,7 @@ struct SignInView: View {
                                 .padding()
                         }
                         
-                        passwordReqText
+                        PasswordReqText(isExpanded: $onboardingVM.showPwdRequirements)
                         
                         Button {
                             onboardingVM.signInUser()
@@ -143,7 +129,7 @@ struct SignInView: View {
                                 .padding()
                         }
                         
-                        passwordReqText
+                        PasswordReqText(isExpanded: $onboardingVM.showPwdRequirements)
                         
                         Button {
                             //needs data verification for text fields
@@ -291,6 +277,22 @@ struct SignInView_Previews: PreviewProvider {
     }
 }
 
+struct PasswordReqText: View {
+    
+    @Binding var isExpanded: Bool
+    
+    var body: some View {
+        HStack(alignment: .top) {
+            Text("    Must be at least 8 characters")
+                .foregroundColor(.white)
+                .font(.caption)
+            Spacer()
+        }
+        .frame(minHeight: 0, maxHeight: isExpanded ? 10 : 0)
+        .clipped()
+        .zIndex(3)
+    }
+}
 
 struct ExpandableView<Header: View, Content: View>: View {
     

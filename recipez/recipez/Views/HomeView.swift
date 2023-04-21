@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct HomeView: View {
     @StateObject var recipeSearchViewModel = RecipeSearchViewModel()
@@ -90,7 +91,7 @@ struct HomeView: View {
             //Hero View...
             showDetailsView()
                 .ignoresSafeArea()
-                .animation(.spring(), value: showDetails)
+                .zIndex(2)
         }
             .background(Color("MainBackgroundColor"))
     }
@@ -111,7 +112,7 @@ struct HomeView: View {
                         
                         HStack {
                             Button {
-                                withAnimation(.easeInOut(duration: 1)) {
+                                withAnimation(.spring()) {
                                     showDetails.toggle()
                                 }
                             } label: {
@@ -203,7 +204,9 @@ struct HomeView: View {
                                 selectedMeal = meal
                                 Task() {
                                     await recipeSearchViewModel.setSelectedMeal(for: meal.idMeal)
-                                    showDetails.toggle()
+                                    withAnimation(.spring()) {
+                                        showDetails.toggle()
+                                    }
                                 }
                             }
                         }

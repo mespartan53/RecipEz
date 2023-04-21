@@ -6,14 +6,12 @@
 //
 
 import SwiftUI
+import Combine
 import FirebaseAuth
 
 struct MainView: View {
-    @StateObject var mainVM = MainViewModel()
-    
-    @State var tabNumber :Int = 1
+    @StateObject var mainVM: MainViewModel = MainViewModel()
     @State var appear = 100.0
-    
     
     var body: some View {
         if !mainVM.isSignedIn {
@@ -29,9 +27,8 @@ struct MainView: View {
                     }
                 }
                 .opacity(appear)
-                .animation(.spring(), value: appear)
         } else {
-            TabView(selection: $tabNumber) {
+            TabView(selection: $mainVM.itemSelected) {
                 Group {
                     HomeView()
                         .tabItem {
@@ -51,6 +48,7 @@ struct MainView: View {
                         }
                         .tag(2)
                     
+                    
                     Text("Shopping List")
                         .tabItem {
                             Label("Shopping List", systemImage: "cart")
@@ -59,13 +57,17 @@ struct MainView: View {
                     
                     Button {
                         mainVM.signOutUser()
+                        mainVM.itemSelected = 1
                     } label: {
                         Text("Sign out")
                     }
-                        .tabItem {
-                            Label("Favorites", systemImage: "heart")
-                        }
-                        .tag(4)
+                    .tabItem {
+                        Label("Favorites", systemImage: "heart")
+                    }
+                    .tag(4)
+                }
+                .fullScreenCover(isPresented: $mainVM.showCreateScreen) {
+                    CreateRecipeView(showCreateScreen: $mainVM.showCreateScreen)
                 }
             }
             .accentColor(Color("AccentColor"))
@@ -74,14 +76,50 @@ struct MainView: View {
 }
 
 class MainViewModel: ObservableObject {
-    @Published var isSignedIn = false
+    let objectWillChange = PassthroughSubject<MainViewModel,Never>()
+    
+    @Published var isSignedIn: Bool {
+        didSet {
+            objectWillChange.send(self)
+        }
+    }
+    @Published var showCreateScreen: Bool {
+        didSet {
+            objectWillChange.send(self)
+        }
+    }
+    
+    @Published var itemSelected: Int {
+        didSet {
+            if itemSelected == 2 {
+                itemSelected = oldValue
+                self.showCreateScreen = true
+            }
+            objectWillChange.send(self)
+        }
+    }
     
     init() {
+        self.itemSelected = 1
+        self.showCreateScreen = false
+        
+        if Auth.auth().currentUser != nil {
+            self.isSignedIn = true
+        } else {
+            self.isSignedIn = false
+        }
+        
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
-                self.isSignedIn = true
+                withAnimation(.spring()) {
+                    self.isSignedIn = true
+                }
+                
             } else {
-                self.isSignedIn = false
+                withAnimation(.spring()) {
+                    self.isSignedIn = false
+                }
+                
             }
         }
     }
